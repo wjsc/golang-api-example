@@ -1,4 +1,4 @@
-module example.com/app-v1
+module app-v1
 
 go 1.14
 
