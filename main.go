@@ -7,12 +7,12 @@ import (
 )
 
 func main() {
-	app := gin.Default()
+	router := gin.Default()
 	var guitarController controllers.GuitarController
-	app.GET("/guitar", guitarController.Get)
-	app.GET("/guitar/:id", guitarController.GetById)
-	app.POST("/guitar", guitarController.Post)
-	app.PUT("/guitar/:id", guitarController.Put)
-	app.DELETE("/guitar/:id", guitarController.Delete)
-	app.Run()
+	router.GET("/guitar", guitarController.Get)
+	router.GET("/guitar/:id", guitarController.GetById)
+	router.POST("/guitar", guitarController.Post)
+	router.PUT("/guitar/:id", guitarController.Put)
+	router.DELETE("/guitar/:id", guitarController.Delete)
+	router.Run()
 }
