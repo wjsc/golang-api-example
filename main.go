@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-
 	controllers "app-v1/controllers"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -12,6 +12,7 @@ func main() {
 	app.GET("/guitar", guitarController.Get)
 	app.GET("/guitar/:id", guitarController.GetById)
 	app.POST("/guitar", guitarController.Post)
+	app.PUT("/guitar/:id", guitarController.Put)
 	app.DELETE("/guitar/:id", guitarController.Delete)
 	app.Run()
 }
