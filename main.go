@@ -8,7 +8,7 @@ import (
 
 func main() {
 	router := gin.Default()
-	var guitarStorage storage.GuitarStorageType
+	var guitarStorage storage.GuitarStorage
 
 	guitarController := controllers.GuitarController{
 		&guitarStorage,
