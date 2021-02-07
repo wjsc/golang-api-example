@@ -5,48 +5,46 @@ import (
 )
 
 type GuitarStorageType struct {
-	elements []models.Guitar
+	elements []models.GuitarModel
 }
 
-var GuitarStorage GuitarStorageType
-
-func (guitarStorage GuitarStorageType) Get() ([]models.Guitar, error) {
-	return GuitarStorage.elements, nil
+func (guitarStorage *GuitarStorageType) Get() ([]models.GuitarModel, error) {
+	return guitarStorage.elements, nil
 }
 
-func (guitarStorage GuitarStorageType) GetById(Id int) (models.Guitar , error) {
+func (guitarStorage *GuitarStorageType) GetById(Id int) (models.GuitarModel , error) {
 
-	for _, currentGuitar := range GuitarStorage.elements {
+	for _, currentGuitar := range guitarStorage.elements {
 		if currentGuitar.Id == Id {
 			return currentGuitar, nil
 		}
 	}
-	return models.Guitar{}, errors.New("Guitar not found")
+	return models.GuitarModel{}, errors.New("Guitar not found")
 }
 
-func (guitarStorage GuitarStorageType) Create(guitar models.Guitar) (models.Guitar, error) {
-	GuitarStorage.elements = append(GuitarStorage.elements, guitar)
+func (guitarStorage *GuitarStorageType) Create(guitar models.GuitarModel) (models.GuitarModel, error) {
+	guitarStorage.elements = append(guitarStorage.elements, guitar)
 	return guitar, nil
 }
 
 
-func (guitarStorage GuitarStorageType) Update(guitar models.Guitar)(models.Guitar, error) {
+func (guitarStorage *GuitarStorageType) Update(guitar models.GuitarModel)(models.GuitarModel, error) {
 	
-	for index, currentGuitar := range GuitarStorage.elements {
+	for index, currentGuitar := range guitarStorage.elements {
 		if currentGuitar.Id == guitar.Id {
-			GuitarStorage.elements[index] = guitar
+			guitarStorage.elements[index] = guitar
 			return guitar, nil
 		}
 	}
-	return models.Guitar{}, errors.New("Guitar not found")
+	return models.GuitarModel{}, errors.New("Guitar not found")
 }
 
 
-func (guitarStorage GuitarStorageType) Delete(Id int)(error) {
-	for index, currentGuitar := range GuitarStorage.elements {
+func (guitarStorage *GuitarStorageType) Delete(Id int)(error) {
+	for index, currentGuitar := range guitarStorage.elements {
 
 		if currentGuitar.Id == Id {
-			GuitarStorage.elements = append(GuitarStorage.elements[:index], GuitarStorage.elements[index+1:]...)
+			guitarStorage.elements = append(guitarStorage.elements[:index], guitarStorage.elements[index+1:]...)
 			return nil
 		}
 	}

@@ -3,23 +3,24 @@ package controllers
 import (
 	"net/http"
 	"strconv"
-
 	models "app-v1/models"
 	storage "app-v1/storage"
 	"github.com/gin-gonic/gin"
 )
 
-type GuitarController struct{}
+type GuitarController struct{
+	Storage *storage.GuitarStorageType
+}
 
-func (GuitarController) Get(context *gin.Context) {
-	var guitars, err = storage.GuitarStorage.Get()
+func (controller GuitarController) Get(context *gin.Context) {
+	var guitars, err = controller.Storage.Get()
 	if err!=nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})	
 	}
 	context.JSON(http.StatusOK, guitars)
 }
 
-func (GuitarController) GetById(context *gin.Context) {
+func (controller GuitarController) GetById(context *gin.Context) {
 
 	var id, err = strconv.Atoi(context.Param("id"))
 	if err != nil {
@@ -27,7 +28,7 @@ func (GuitarController) GetById(context *gin.Context) {
 		return
 	}
 
-	guitar, err := storage.GuitarStorage.GetById(id)
+	guitar, err := controller.Storage.GetById(id)
 	if err!= nil {
 		context.JSON(http.StatusNotFound, gin.H{"error": "Guitar not found"})
 		return
@@ -41,15 +42,15 @@ func (GuitarController) GetById(context *gin.Context) {
 	return
 }
 
-func (GuitarController) Post(context *gin.Context) {
-	var json models.Guitar
+func (controller GuitarController) Post(context *gin.Context) {
+	var json models.GuitarModel
 
 	if err := context.ShouldBindJSON(&json); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	guitar, err := storage.GuitarStorage.Create(json)
+	guitar, err := controller.Storage.Create(json)
 	if err!=nil {
 		context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 	}
@@ -58,8 +59,8 @@ func (GuitarController) Post(context *gin.Context) {
 	return
 }
 
-func (GuitarController) Put(context *gin.Context) {
-	var json models.Guitar
+func (controller GuitarController) Put(context *gin.Context) {
+	var json models.GuitarModel
 
 	if err := context.ShouldBindJSON(&json); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -73,7 +74,7 @@ func (GuitarController) Put(context *gin.Context) {
 	}
 
 	json.Id = id
-	guitar, err := storage.GuitarStorage.Update(json)
+	guitar, err := controller.Storage.Update(json)
 	if err!=nil {
 		context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 	}
@@ -82,7 +83,7 @@ func (GuitarController) Put(context *gin.Context) {
 	return
 }
 
-func (GuitarController) Delete(context *gin.Context) {
+func (controller GuitarController) Delete(context *gin.Context) {
 	
 	var id, err = strconv.Atoi(context.Param("id"))
 	if err != nil {
@@ -90,7 +91,7 @@ func (GuitarController) Delete(context *gin.Context) {
 		return
 	}
 
-	err = storage.GuitarStorage.Delete(id)
+	err = controller.Storage.Delete(id)
 	if err!=nil {
 		context.JSON(http.StatusNotFound, gin.H{"error": "Guitar not found"})
 	}
