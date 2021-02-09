@@ -3,7 +3,7 @@ import (
 	"app-v1/models"
 )
 
-type IGuitarMemoryStorage interface {
+type IGuitarStorage interface {
 	Get() ([]models.GuitarModel, error)
 	GetById(Id int) (models.GuitarModel , error)
 	Create(guitar models.GuitarModel) (models.GuitarModel, error)

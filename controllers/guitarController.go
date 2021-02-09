@@ -9,7 +9,7 @@ import (
 )
 
 type GuitarController struct{
-	Storage storage.IGuitarMemoryStorage
+	Storage storage.IGuitarStorage
 }
 
 func (controller GuitarController) Get(context *gin.Context) {
