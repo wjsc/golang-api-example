@@ -3,13 +3,13 @@ package controllers
 import (
 	"net/http"
 	"strconv"
-	models "app-v1/models"
-	storage "app-v1/storage"
+	"app-v1/models"
+	"app-v1/storage"
 	"github.com/gin-gonic/gin"
 )
 
 type GuitarController struct{
-	Storage *storage.GuitarStorage
+	Storage storage.IGuitarMemoryStorage
 }
 
 func (controller GuitarController) Get(context *gin.Context) {
@@ -77,6 +77,7 @@ func (controller GuitarController) Put(context *gin.Context) {
 	guitar, err := controller.Storage.Update(json)
 	if err!=nil {
 		context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return 
 	}
 
 	context.JSON(http.StatusOK, guitar)

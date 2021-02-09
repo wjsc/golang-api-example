@@ -1,17 +1,17 @@
 package main
 
 import (
-	controllers "app-v1/controllers"
-	storage "app-v1/storage"
+	"app-v1/controllers"
+	"app-v1/storage"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
-	var guitarStorage storage.GuitarStorage
+	var guitarMemoryStorage storage.GuitarMemoryStorage
 
-	guitarController := controllers.GuitarController{
-		&guitarStorage,
+	var guitarController = controllers.GuitarController{
+		&guitarMemoryStorage,
 	}
 
 	router.GET("/guitar", guitarController.Get)
